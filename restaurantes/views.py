@@ -81,6 +81,7 @@ def getAddress(request, name):
 	url = "http://maps.googleapis.com/maps/api/geocode/json?address="+name+"&language=es"
 	response = urllib.urlopen(url)
 	data = json.loads(response.read())
+	print(data)
 	address=[]
 	for c in data["results"]:
 		address.append(c["formatted_address"])

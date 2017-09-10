@@ -1,7 +1,7 @@
 from rest_framework_mongoengine import serializers
 from rest_framework_mongoengine import viewsets
 
-from models import restaurants
+from .models import restaurants
 
 class restaurantsSerializer(serializers.DocumentSerializer):
 	class Meta:
