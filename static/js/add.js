@@ -95,6 +95,7 @@ $(function()
 			city = city.replace(/ó/gi,"o");
 			city = city.replace(/ú/gi,"u");
 			city = city.replace(/ñ/gi,"n");
+			city = city.replace(/\s+/g, '-');
 			$.getJSON("/cities/"+city, function (data) 
 			{
 				response(data);
@@ -124,6 +125,7 @@ $(function()
 		data = data.replace(/ó/gi,"o");
 		data = data.replace(/ú/gi,"u");
 		data = data.replace(/ñ/gi,"n");
+		data = data.replace(/\s+/g, '-');
 		return data;
 	}
 	

@@ -13,9 +13,9 @@ urlpatterns = [
   url(r'^add/$', views.add, name='add'),
   url(r'^search/$', views.search, name='search'),
   url(r'^restaurante/(?P<id>[0-9]{8})/$', views.restaurante, name='restaurante'),
-  url(r'^cities/(?P<city>[\w ]+)', views.getCity, name='cities'),
-  url(r'^find/image/(?P<address>[\w ]+)', views.getPhoto, name='getPhoto'),
-  url(r'^address/(?P<name>[\w|\W]+)', views.getAddress, name='address'),
+  url(r'^cities/(?P<city>[-\w]+)', views.getCity, name='cities'),
+  url(r'^find/image/(?P<address>[-\w]+)', views.getPhoto, name='getPhoto'),
+  url(r'^address/(?P<name>[-\w]+)', views.getAddress, name='address'),
   url(r'^gridfs/(?P<file_id>[0-9a-f]{24})/$', views.serve_file, name='gridfs'),
   url(r'^api/', include(router.urls, namespace='api')),
 ]
