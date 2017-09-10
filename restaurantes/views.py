@@ -19,8 +19,8 @@ API_KEY = "%20AIzaSyAlWonn1P-PzadEBz3VWybVtjasLLxSDns"
 # Create your views here.
 
 def index(request):
-    context = {}   # Aqui van la las variables para la plantilla
-    return render(request,'index.html', context)
+	context = {}   # Aqui van la las variables para la plantilla
+	return render(request,'index.html', context)
 
 def listar(request):
 	context = {
@@ -90,46 +90,40 @@ def getAddress(request, name):
 
 @login_required(login_url='/accounts/login/')
 def add(request):
-    
-    if request.method == 'GET':
-        formulario = RestaurantForm()
-        # GET
-        context = {
-            'formulario': formulario,
-            "menu": "add",
-        }   # Aqui van la las variables para la plantilla
-        return render(request, 'add.html', context)
-    
-    if request.method == 'POST':
-        formulario = RestaurantForm(request.POST, request.FILES)
-        formulario.is_valid()
-        
-        name = formulario.cleaned_data.get('name')
-        cuisine = formulario.cleaned_data.get('cuisine')
-        borough = formulario.cleaned_data.get('borough')
-        city = formulario.cleaned_data.get('city')
-        address = formulario.cleaned_data.get('address')
-        image_default = formulario.cleaned_data.get('image_default')
-        print(formulario.cleaned_data)
-        #image = 
-        if(image_default == "yes"):
-        	URL = "https://maps.googleapis.com/maps/api/streetview?size=800x600&location="+address+"&key="+API_KEY
-        	URL = parseURL(URL)
-        	image = cStringIO.StringIO(urllib.urlopen(URL).read())
-        else:
-        	image = request.FILES.get('image_file')
+	if request.method == 'GET':
+		formulario = RestaurantForm()
+		# GET
+		context = {
+			'formulario': formulario,
+			"menu": "add",
+		}   # Aqui van la las variables para la plantilla
+		return render(request, 'add.html', context)
 
-        print image
+	if request.method == 'POST':
+		formulario = RestaurantForm(request.POST, request.FILES)
+		formulario.is_valid()
+		name = formulario.cleaned_data.get('name')
+		cuisine = formulario.cleaned_data.get('cuisine')
+		borough = formulario.cleaned_data.get('borough')
+		city = formulario.cleaned_data.get('city')
+		address = formulario.cleaned_data.get('address')
+		image_default = formulario.cleaned_data.get('image_default')
+		if(image_default == "yes"):
+			URL = "https://maps.googleapis.com/maps/api/streetview?size=800x600&location="+address+"&key="+API_KEY
+			URL = parseURL(URL)
+			image = cStringIO.StringIO(urllib.urlopen(URL).read())
+		else:
+			image = request.FILES.get('image_file')
 
-        # crear id aleatorio, un numero de 8 cifras y que no se encuentre ya en la base de datos
-        restaurant_id = randint(10000000,99999999)
-        while(restaurants.objects(restaurant_id=str(restaurant_id)).first() != None):
-            restaurant_id = randint(10000000,99999999)
-        
-        if(name != "" and cuisine != "" and borough != "" and city != "" and address != ""):
-            r = restaurants(name=name, restaurant_id=str(restaurant_id), cuisine=cuisine, borough=borough, city=city, address=address, image=image)
-            r.save()
-            return redirect('restaurante', id=restaurant_id)
+		# crear id aleatorio, un numero de 8 cifras y que no se encuentre ya en la base de datos
+		restaurant_id = randint(10000000,99999999)
+		while(restaurants.objects(restaurant_id=str(restaurant_id)).first() != None):
+			restaurant_id = randint(10000000,99999999)
+
+		if(name != "" and cuisine != "" and borough != "" and city != "" and address != ""):
+			r = restaurants(name=name, restaurant_id=str(restaurant_id), cuisine=cuisine, borough=borough, city=city, address=address, image=image)
+			r.save()
+			return redirect('restaurante', id=restaurant_id)
         
 	
 
