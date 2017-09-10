@@ -9,8 +9,10 @@ from mongoengine.connection import get_db
 from gridfs import GridFS, NoFile
 from bson.objectid import ObjectId
 from django.contrib.auth.decorators import login_required
-import urllib, json
-import urllib.request as ur
+import json
+#import urllib as ur
+import urllib.request as ur # for python 2.7
+
 from django.http import JsonResponse
 from io import BytesIO
 from PIL import Image
@@ -62,6 +64,7 @@ def parseURL(addr):
 	addr = addr.replace("ó","o")
 	addr = addr.replace("ú","u")
 	addr = addr.replace("ñ","n")
+	addr = addr.replace(" ","-")
 	return addr
 
 @login_required(login_url='/accounts/login/')

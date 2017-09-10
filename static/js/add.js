@@ -157,7 +157,8 @@ $(function()
 				name = name.replace(/ó/gi,"o");
 				name = name.replace(/ú/gi,"u");
 				name = name.replace(/ñ/gi,"n");
-				$.getJSON("/address/"+name, function (data) 
+				name = name.replace(/\s+/g, '-');
+;				$.getJSON("/address/"+name, function (data) 
 				{
 					$("#resolve_address").html("Buscar dirección");
 					$("#resolve_address").removeClass("loading");
