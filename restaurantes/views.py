@@ -10,6 +10,7 @@ from gridfs import GridFS, NoFile
 from bson.objectid import ObjectId
 from django.contrib.auth.decorators import login_required
 import urllib, json
+import urllib.request as ur
 from django.http import JsonResponse
 from io import BytesIO
 from PIL import Image
@@ -66,11 +67,11 @@ def parseURL(addr):
 @login_required(login_url='/accounts/login/')
 def getPhoto(request, address):
 	url = "https://maps.googleapis.com/maps/api/streetview?size=800x600&location="+address+"&key="+API_KEY
-	return HttpResponse(urllib.urlopen(url).read(), content_type="image/jpeg")
+	return HttpResponse(ur.urlopen(url).read(), content_type="image/jpeg")
 
 def getCity(request, city):
 	url = "https://maps.googleapis.com/maps/api/place/autocomplete/json?input="+city+"&types=(cities)&language=es&key="+API_KEY
-	response = urllib.urlopen(url)
+	response = ur.urlopen(url)
 	data = json.loads(response.read())
 	cities=[]
 	for c in data["predictions"]:
@@ -79,7 +80,7 @@ def getCity(request, city):
 
 def getAddress(request, name):
 	url = "http://maps.googleapis.com/maps/api/geocode/json?address="+name+"&language=es"
-	response = urllib.urlopen(url)
+	response = ur.urlopen(url)
 	data = json.loads(response.read())
 	print(data)
 	address=[]
@@ -112,7 +113,7 @@ def add(request):
 		if(image_default == "yes"):
 			URL = "https://maps.googleapis.com/maps/api/streetview?size=800x600&location="+address+"&key="+API_KEY
 			URL = parseURL(URL)
-			image = BytesIO(urllib.urlopen(URL).read())
+			image = BytesIO(ur.urlopen(URL).read())
 		else:
 			image = request.FILES.get('image_file')
 
