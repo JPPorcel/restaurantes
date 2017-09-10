@@ -11,7 +11,7 @@ from bson.objectid import ObjectId
 from django.contrib.auth.decorators import login_required
 import urllib, json
 from django.http import JsonResponse
-import urllib, cStringIO
+from io import BytesIO
 from PIL import Image
 
 API_KEY = "%20AIzaSyAlWonn1P-PzadEBz3VWybVtjasLLxSDns"
@@ -111,7 +111,7 @@ def add(request):
 		if(image_default == "yes"):
 			URL = "https://maps.googleapis.com/maps/api/streetview?size=800x600&location="+address+"&key="+API_KEY
 			URL = parseURL(URL)
-			image = cStringIO.StringIO(urllib.urlopen(URL).read())
+			image = BytesIO(urllib.urlopen(URL).read())
 		else:
 			image = request.FILES.get('image_file')
 
