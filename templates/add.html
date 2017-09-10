@@ -1,0 +1,95 @@
+{% extends "layout.html" %}
+{% load bootstrap4 %}
+
+{% block title %}Añadir restaurante{% endblock %}
+
+{% block content %}
+		<h2>Nuevo restaurante</h2>
+		<br><br>
+		 <div class="row">
+			<div class="col-sm-6">
+				<form class="form-horizontal form-add" action="{% url 'add' %}" method="POST" enctype="multipart/form-data" id="add-restaurant-form">
+					{% csrf_token %}
+				
+					<div class="form-group has-danger form_city ui-widget">
+						<label class="form-control-label" for="id_city">Ciudad</label>
+						<input class="form-control" id="id_city" name="city" placeholder="Ciudad" title="" type="text" />
+						<small class="text-muted">
+							<div class="help-block help-error" id="error_city">Tienes que añadir la ciudad donde se encuentra el restaurante.</div>
+						</small>
+					</div>
+					<div class="form-group has-danger form_name">
+						<label class="form-control-label" for="id_name">Nombre</label>
+						<input class="form-control" id="id_name" maxlength="80" name="name" placeholder="Nombre del restaurante" title="" type="text" />
+						<small class="text-muted">
+							<div class="help-block help-error" id="error_name">Tienes que añadir el nombre del restaurante.</div>
+						</small>
+					</div>
+					<div class="form-group has-danger form_name">
+						<label class="form-control-label" for="id_address">Dirección</label>
+						<div class="row">
+							<div class="col-sm-8">
+								<input class="form-control" id="id_address" maxlength="80" name="address" placeholder="Dirección del restaurante" title="" type="text" readonly/>
+								<small class="text-muted">
+									<div class="help-block help-error" id="error_address">Tienes que añadir la dirección del restaurante.</div>
+									<div class="help-block" id="address_notfound">No se ha encontrado la dirección</div>
+									<div class="help-block"><a id="add-address">Añadir dirección manualmente</a></div>
+								</small>
+							</div>
+							<div class="col-sm-4">
+								<button type="button" id="resolve_address" class="btn btn-info">
+									Buscar dirección
+								</button>
+							</div>
+						</div>
+					</div>
+					<div class="form-group has-danger form_cuisine">
+						<label class="form-control-label" for="id_cuisine">Cocina</label>
+						<input class="form-control" id="id_cuisine" name="cuisine" placeholder="Tipo de cocina" title="" type="text" />
+						<small class="text-muted">
+							<div class="help-block help-error" id="error_cuisine">Tienes que añadir el tipo de cocina del restaurante.</div>
+						</small>
+					</div>	
+					<div class="form-group has-danger form_borough">
+						<label class="form-control-label" for="id_borough">Situación</label>
+						<input class="form-control" id="id_borough" name="borough" placeholder="Situación o barrio donde se encuentra el restaurante (por ejemplo: Centro)" title="" type="text" />
+						<small class="text-muted">
+							<div class="help-block help-error" id="error_borough">Tienes que añadir la situación o barrio del restaurante.</div>
+						</small>
+					</div>
+					<div class="form-group has-danger form_image">
+						<label class="form-control-label" for="id_image">Imagen (Pulsa para cambiar la imagen)</label>
+						<div class="checkbox" style="margin-bottom: 20px">
+							<label><input type="checkbox" value="" checked="checked" id="checkbox-image">Utilizar imagen por defecto</label>
+						</div>
+						<div class="row bootstrap4-multi-input">
+							<div class="col-xs-12">
+								<input class="" id="id_image" name="image_file" type="file" disabled/>
+								<input class="" id="id_image_default" name="image_default" type="hidden" value="no"/>
+							</div>
+						</div>
+						<small class="text-muted">
+							<div class="help-block help-error" id="error_image">Tienes que añadir una imagen del restaurante.</div>
+							<div class="help-block">Preferiblemente 600x600px o relación 1:1</div>
+						</small>
+					</div>
+					
+					<div class="form-group">
+						<button type="submit" class="btn btn-primary">
+							<span class="icon icon-star"></span> Insertar
+						</button>
+					</div>
+					
+				</form>
+			</div>
+			<div class="col-sm-6">
+				<div id="info-restaurant">
+					<img id="img-restaurant"/>
+<!-- 				http://gd.geobytes.com/AutoCompleteCity?&q= -->
+				</div>
+			</div>
+		</div>
+{% endblock %}
+
+
+

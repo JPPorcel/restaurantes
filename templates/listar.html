@@ -1,0 +1,12 @@
+{% extends "layout.html" %}
+
+{% block title %}Consultar restaurantes{% endblock %}
+
+{% block content %}
+	<ul>
+		{% for r in restaurantes %}
+		<li><a href="{% url 'restaurante' id=r.restaurant_id %}">{{ r.name }}</a> ({{r.cuisine}})</li>
+		
+		{% endfor %}
+    </ul>
+{% endblock %}

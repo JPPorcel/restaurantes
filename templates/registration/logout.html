@@ -1,0 +1,9 @@
+{% extends "layout.html" %}
+{% load bootstrap4 %}
+
+{% block title %}Logout{% endblock %}
+
+{% block content %}
+	<h1>Has cerrado sesión</h1>
+	<p>Puedes iniciar sesión de nuevo <a href="{% url 'auth_login' %}">aquí</a>.</p>
+{% endblock %}

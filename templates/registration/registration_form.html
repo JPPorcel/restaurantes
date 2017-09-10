@@ -1,0 +1,17 @@
+{% extends "layout.html" %}
+{% load bootstrap4 %}
+
+{% block title %}Registrar{% endblock %}
+
+{% block content %}
+	<form class="form-signin" method="post" action=".">
+		{% csrf_token %}
+		{% bootstrap_form form %}
+		{% buttons %}
+			<button type="submit" class="btn btn-lg btn-primary btn-block">
+				{% bootstrap_icon "star" %} Registrarse
+			</button>
+		{% endbuttons %}
+		<input name="next" type="hidden" value="/restaurantes">
+	</form>
+{% endblock %}

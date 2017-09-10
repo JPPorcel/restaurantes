@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>{% block title %}Restaurantes{% endblock %}</title>
+    <!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+	
+	<link rel="stylesheet" href="http://ajax.aspnetcdn.com/ajax/jquery.ui/1.10.3/themes/flick/jquery-ui.css" />
+	
+	{% load static %}
+	
+	{% block stylesheet %}{% endblock %}
+	
+	<link href="{% static 'css/signin.css' %}" rel="stylesheet">
+	<link href="{% static 'css/add.css' %}" rel="stylesheet">
+  </head>
+  <body>
+   
+    <header>
+    {% block header %}
+		<nav class="navbar navbar-default" role="navigation">
+			<!-- Brand and toggle get grouped for better mobile display -->
+			<div class="container">
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+					<span class="sr-only">Toggle navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					</button>
+					<a class="navbar-brand" href="/">Restaurantes</a>
+				</div>
+
+				<!-- Collect the nav links, forms, and other content for toggling -->
+				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+					<ul class="nav navbar-nav">
+						<li id="listar"><a href="{% url 'listar' %}">Listar</a></li>
+						<li id="add"><a href="{% url 'add' %}">Añadir</a></li>
+					</ul>
+					<div class="col-sm-3 col-md-3">
+						<form class="navbar-form" role="search" action="{% url 'search' %}" method="GET">
+						<div class="input-group">
+							<input type="text" class="form-control" placeholder="Buscar por cocina" name="cocina" id="cocina">
+							<div class="input-group-btn">
+								<button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
+							</div>
+						</div>
+						</form>
+					</div>
+					<ul class="nav navbar-nav navbar-right">
+					{% if user.is_authenticated %}
+						<li><a href="#"><span class="glyphicon glyphicon-user"></span> &nbsp; {{ user.get_username }}</a></li>
+						<li class="btn-primary"><a href="{% url 'auth_logout' %}" style="color:white"><span class="glyphicon glyphicon-log-out"></span> &nbsp; Salir</a></li>
+					{% else %}
+						<li class="btn-primary"><a href="{% url 'auth_login' %}" style="color:white"><span class="glyphicon glyphicon-log-in"></span> &nbsp; Entrar</a></li>
+					{% endif %}
+						
+					</ul>
+				</div><!-- /.navbar-collapse -->
+			</div>
+		</nav>
+	{% endblock %}
+    </header> 
+     
+    <div class="container">
+    {% block content %}{% endblock %}
+    </div>
+    
+    <!-- jquery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
+    <!-- Latest compiled and minified JavaScript -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+	
+	
+	{% block javascript %}{% endblock %}
+	
+	<script type="text/javascript">
+		$(document).ready(function(){  
+			$('#{{menu}}').addClass('active');
+		});
+	</script>
+	<script src="{% static 'js/add.js' %}"></script>
+
+  </body>
+</html>
