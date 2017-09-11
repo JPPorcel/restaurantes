@@ -10,12 +10,18 @@ from gridfs import GridFS, NoFile
 from bson.objectid import ObjectId
 from django.contrib.auth.decorators import login_required
 import json
-#import urllib as ur
-import urllib.request as ur # for python 2.7
+import urllib as ur
+#import urllib.request as ur # for python 2.7
 
 from django.http import JsonResponse
 from io import BytesIO
 from PIL import Image
+
+from .serializers import *
+from rest_framework_mongoengine import viewsets
+from rest_framework.decorators import detail_route
+from rest_framework import renderers
+from rest_framework import permissions
 
 API_KEY = "%20AIzaSyAlWonn1P-PzadEBz3VWybVtjasLLxSDns"
 
@@ -64,7 +70,7 @@ def parseURL(addr):
 	addr = addr.replace("ó","o")
 	addr = addr.replace("ú","u")
 	addr = addr.replace("ñ","n")
-	addr = addr.replace(" ","-")
+	addr = addr.replace(" ","_")
 	return addr
 
 @login_required(login_url='/accounts/login/')
@@ -138,3 +144,24 @@ def search(request):
 		"restaurantes": restaurants.objects(cuisine__icontains=request.GET.get('cocina')),
 	}
 	return render (request, 'listar.html', context)
+
+
+class restaurantsViewSet(viewsets.ModelViewSet):
+	lookup_field = 'restaurant_id'
+	queryset = restaurants.objects.all()
+	serializer_class = restaurantsSerializer
+	permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
+
+	@detail_route(renderer_classes=[renderers.StaticHTMLRenderer])
+	def highlight(self, request, *args, **kwargs):
+		m = self.get_object()
+		return Response(m)
+	def pre_save(self, obj):
+		obj.owner = self.request.user
+
+
+class restaurantListViewSet(viewsets.ModelViewSet):
+	lookup_field = "restaurant_id"
+	queryset = restaurants.objects.all()
+	serializer_class = restaurantListSerializer
+	permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
