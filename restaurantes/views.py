@@ -10,8 +10,8 @@ from gridfs import GridFS, NoFile
 from bson.objectid import ObjectId
 from django.contrib.auth.decorators import login_required
 import json
-import urllib as ur
-#import urllib.request as ur # for python 2.7
+#import urllib as ur
+import urllib.request as ur # for python 2.7
 
 from django.http import JsonResponse
 from io import BytesIO
